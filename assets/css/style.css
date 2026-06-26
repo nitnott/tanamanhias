@@ -1,0 +1,264 @@
+/* assets/css/style.css - Custom Styles Sistem Tanaman Hias */
+
+/* ── Root Variables ── */
+:root {
+    --sidebar-width: 240px;
+    --navbar-height: 60px;
+    --primary-green: #2e7d32;
+    --light-green:   #e8f5e9;
+    --accent-green:  #4caf50;
+}
+
+/* ── Layout Utama ── */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+}
+
+/* ── Navbar ── */
+.navbar-brand-text {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: .5px;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    background: linear-gradient(180deg, var(--primary-green) 0%, #1b5e20 100%);
+    overflow-y: auto;
+    z-index: 900;
+    transition: width .3s ease;
+    box-shadow: 2px 0 8px rgba(0,0,0,.15);
+}
+
+.sidebar .nav-link {
+    color: rgba(255,255,255,.82);
+    padding: .65rem 1.25rem;
+    border-radius: 0;
+    font-size: .92rem;
+    transition: background .2s, color .2s, padding-left .2s;
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background: rgba(255,255,255,.14);
+    color: #fff;
+    padding-left: 1.6rem;
+}
+
+.sidebar .nav-link i {
+    width: 18px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.sidebar-heading {
+    color: rgba(255,255,255,.45);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 1rem 1.25rem .35rem;
+}
+
+.sidebar-divider {
+    border-top: 1px solid rgba(255,255,255,.12);
+    margin: .5rem 0;
+}
+
+/* ── Main Content ── */
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding: calc(var(--navbar-height) + 24px) 28px 24px;
+    min-height: 100vh;
+    transition: margin-left .3s ease;
+}
+
+/* ── Dashboard Cards ── */
+.stat-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    transition: transform .2s, box-shadow .2s;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,.14);
+}
+
+.stat-card .card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+
+.stat-card .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ── Tabel Data ── */
+.table-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+.table thead th {
+    background-color: var(--primary-green);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    font-size: .88rem;
+}
+
+.table tbody tr:hover {
+    background-color: var(--light-green);
+}
+
+.table td {
+    vertical-align: middle;
+    font-size: .9rem;
+}
+
+/* ── Gambar Tanaman ── */
+.img-tanaman {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+}
+
+.img-tanaman-lg {
+    width: 100%;
+    max-height: 340px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.img-placeholder {
+    width: 70px;
+    height: 70px;
+    background: #e8f5e9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 1.4rem;
+    border: 2px dashed #c8e6c9;
+}
+
+/* ── Form Card ── */
+.form-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: .88rem;
+    color: #444;
+}
+
+/* ── Login Page ── */
+.login-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1b5e20 0%, #4caf50 60%, #a5d6a7 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 12px 40px rgba(0,0,0,.2);
+}
+
+.login-logo {
+    width: 64px;
+    height: 64px;
+    background: var(--primary-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #fff;
+    margin: 0 auto 1rem;
+}
+
+/* ── Badge & Pills ── */
+.badge-kategori {
+    background: var(--light-green);
+    color: var(--primary-green);
+    font-weight: 600;
+    padding: .3em .7em;
+    border-radius: 20px;
+    font-size: .82rem;
+}
+
+/* ── Alert Custom ── */
+.alert {
+    border-radius: 10px;
+    font-size: .92rem;
+}
+
+/* ── Footer ── */
+.footer {
+    margin-left: var(--sidebar-width);
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: .85rem 1.5rem;
+    font-size: .82rem;
+    color: #888;
+}
+
+/* ── Pagination ── */
+.page-link {
+    color: var(--primary-green);
+}
+.page-item.active .page-link {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        overflow: hidden;
+    }
+    .sidebar.show {
+        width: var(--sidebar-width);
+    }
+    .main-content,
+    .footer {
+        margin-left: 0;
+    }
+}
