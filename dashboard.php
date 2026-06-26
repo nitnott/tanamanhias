@@ -23,10 +23,6 @@ $total_stok = (int) mysqli_fetch_assoc($q_stok)['total_stok'];
 $q_kat = mysqli_query($koneksi, "SELECT COUNT(DISTINCT kategori) AS jml_kat FROM tanaman");
 $jml_kategori = (int) mysqli_fetch_assoc($q_kat)['jml_kat'];
 
-// Total nilai inventaris (harga × stok)
-$q_nilai = mysqli_query($koneksi, "SELECT COALESCE(SUM(harga * stok), 0) AS nilai FROM tanaman");
-$nilai_inventaris = (float) mysqli_fetch_assoc($q_nilai)['nilai'];
-
 // ── 5 tanaman terakhir ditambahkan ──
 $q_terbaru = mysqli_query($koneksi,
     "SELECT nama_tanaman, kategori, stok, harga, tanggal_input
@@ -35,13 +31,6 @@ $q_terbaru = mysqli_query($koneksi,
      LIMIT 5"
 );
 
-// ── Distribusi per kategori (untuk ringkasan) ──
-$q_kategori = mysqli_query($koneksi,
-    "SELECT kategori, COUNT(*) AS jumlah, SUM(stok) AS total_stok
-     FROM tanaman
-     GROUP BY kategori
-     ORDER BY jumlah DESC"
-);
 ?>
 
 <!-- ══ Breadcrumb ══ -->
@@ -104,30 +93,11 @@ $q_kategori = mysqli_query($koneksi,
         </div>
     </div>
 
-    <!-- Nilai Inventaris -->
-    <div class="col-sm-6 col-xl-3">
-        <div class="card stat-card h-100">
-            <div class="card-body d-flex align-items-center gap-3 p-4">
-                <div class="card-icon bg-danger bg-opacity-10 text-danger">
-                    <i class="bi bi-currency-dollar"></i>
-                </div>
-                <div>
-                    <div class="stat-number text-danger" style="font-size:1.4rem;">
-                        Rp<?php echo number_format($nilai_inventaris, 0, ',', '.'); ?>
-                    </div>
-                    <div class="text-muted small fw-semibold">Nilai Inventaris</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div><!-- /row stat cards -->
 
-<!-- ══ Baris bawah: Terbaru + Kategori ══ -->
+<!-- ══ Daftar Tanaman Terbaru ══ -->
 <div class="row g-4">
-
-    <!-- Tanaman Terbaru -->
-    <div class="col-lg-7">
+    <div class="col-12">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
                 <h6 class="mb-0 fw-bold">
@@ -174,49 +144,7 @@ $q_kategori = mysqli_query($koneksi,
             </div>
         </div>
     </div>
-
-    <!-- Distribusi Kategori -->
-    <div class="col-lg-5">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom py-3">
-                <h6 class="mb-0 fw-bold">
-                    <i class="bi bi-pie-chart me-2 text-success"></i>Distribusi Kategori
-                </h6>
-            </div>
-            <div class="card-body">
-                <?php if (mysqli_num_rows($q_kategori) > 0):
-                    // Hitung total untuk persentase
-                    $colors = ['success', 'info', 'warning', 'danger', 'primary', 'secondary'];
-                    $ci = 0;
-                    while ($kat = mysqli_fetch_assoc($q_kategori)):
-                        $pct = $total_tanaman > 0 ? round(($kat['jumlah'] / $total_tanaman) * 100) : 0;
-                ?>
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span class="small fw-semibold"><?php echo htmlspecialchars($kat['kategori']); ?></span>
-                        <span class="small text-muted"><?php echo $kat['jumlah']; ?> tanaman (<?php echo $pct; ?>%)</span>
-                    </div>
-                    <div class="progress" style="height:10px;">
-                        <div class="progress-bar bg-<?php echo $colors[$ci % count($colors)]; ?>"
-                             role="progressbar"
-                             style="width: <?php echo $pct; ?>%"
-                             aria-valuenow="<?php echo $pct; ?>"
-                             aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-                <?php $ci++; endwhile; ?>
-                <?php else: ?>
-                    <p class="text-muted text-center py-4">
-                        <i class="bi bi-inbox d-block fs-3 mb-2"></i>
-                        Belum ada data kategori.
-                    </p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-
-</div><!-- /row bawah -->
+</div>
 
 <!-- Tombol aksi cepat -->
 <div class="mt-4 d-flex gap-2 flex-wrap">
